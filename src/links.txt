@@ -1,0 +1,19 @@
+Rubrics
+https://review.udacity.com/#!/rubrics/26/view
+
+Sample project
+https://s3.amazonaws.com/content.udacity-data.com/courses/ud651/diamondsExample_2016-05.html
+
+Template:
+https://d17h27t6h515a5.cloudfront.net/topher/2017/February/58af99ac_projecttemplate/projecttemplate.rmd
+
+Dataset explanation:
+Red Wine Quality[1]
+Read this text file which describes the variables and how the data was collected.
+This tidy data set contains 1,599 red wines with 11 variables on the chemical properties of the wine. At least 3 wine experts rated the quality of each wine, providing a rating between 0 (very bad) and 10 (very excellent).
+Which chemical properties influence the quality of red wines?
+10-20 hours
+https://s3.amazonaws.com/udacity-hosted-downloads/ud651/wineQualityInfo.txt
+
+Analysis video:
+https://www.youtube.com/watch?v=rPg_RJxyVQM
