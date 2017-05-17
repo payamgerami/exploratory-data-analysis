@@ -38,14 +38,13 @@ fixed.acidity) to get a better understanding of the data.
 
 ```{r, echo=FALSE}
 # exploring the values of four variables
-summary(wine$quality)
-summary(wine$alcohol)
-summary(wine$residual.sugar)
-summary(wine$fixed.acidity)
+summary(wine)
 ```
 
+###Quality
+
 We can see in the following diagrams that the quality distribution is fairly 
-normal and we do not have isgnificant outliers.
+normal and we do not have sgnificant outliers.
 
 ```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the quality distribution
@@ -59,27 +58,166 @@ p3 <- ggplot( aes( x = 1, y = quality), data = wine) +
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
-Other distributions
+In the following section we explore other variables that have an effect on the 
+quality.
+
+###Volatile Acidity
+```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+# exploring the volatile.acidity distribution
+p1 <- ggplot( aes( x = volatile.acidity), data = wine) +
+  geom_histogram()
+p2 <- ggplot( aes( x = volatile.acidity), data = wine) +
+  geom_histogram() +
+  xlim(0.15,0.95)
+p3 <- ggplot( aes( x = 1, y = volatile.acidity), data = wine) +
+  geom_boxplot()
+grid.arrange(p1,p2,p3,ncol = 3)
+```
+
+The amount of acetic acid in wine, which at too high of levels can lead to an 
+unpleasant, vinegar taste. As we can see there are some outliers that we can 
+check later to see the quality of the wine with such a high level of acetic 
+acid.
+
+###Citric Acid
+```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+# exploring the citric.acid distribution
+p1 <- ggplot( aes( x = citric.acid), data = wine) +
+  geom_histogram()
+p2 <- ggplot( aes( x = citric.acid), data = wine) +
+  geom_histogram() +
+  scale_x_log10()
+p3 <- ggplot( aes( x = 1, y = citric.acid), data = wine) +
+  geom_boxplot()
+grid.arrange(p1,p2,p3,ncol = 3)
+```
+
+Found in small quantities, citric acid can add 'freshness' and flavor to wines. 
+
+###Residual Sugar
+```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+# exploring the residual.sugar distribution
+p1 <- ggplot( aes( x = residual.sugar), data = wine) +
+  geom_histogram()
+p2 <- ggplot( aes( x = residual.sugar), data = wine) +
+  geom_histogram() +
+  xlim(1,4)
+p3 <- ggplot( aes( x = 1, y = residual.sugar), data = wine) +
+  geom_boxplot()
+grid.arrange(p1,p2,p3,ncol = 3)
+```
+
+The amount of sugar remaining after fermentation stops, it's rare to find wines 
+with less than 1 gram/liter and wines with greater than 45 grams/liter are 
+considered sweet. The maximum amount of sugar we have in our dataset is 15.5 
+grams but majarity of wines in our sample have between 1 and 4 grams of sugar 
+and the distribution is right skewed.
+
+###Total Sulfur Dioxide
+```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+# exploring the total.sulfur.dioxide distribution
+p1 <- ggplot( aes( x = total.sulfur.dioxide), data = wine) +
+  geom_histogram()
+p2 <- ggplot( aes( x = total.sulfur.dioxide), data = wine) +
+  geom_histogram(binwidth=50)
+p3 <- ggplot( aes( x = 1, y = total.sulfur.dioxide), data = wine) +
+  geom_boxplot()
+grid.arrange(p1,p2,p3,ncol = 3)
+```
+
+Amount of free and bound forms of S02; in low concentrations, SO2 is mostly 
+undetectable in wine, but at free SO2 concentrations over 50 ppm, SO2 becomes 
+evident in the nose and taste of wine. As we can see here we have a couple of 
+outliers as well which we can check later to find out the possible effect they 
+have a the quality.
+
+###PH
+```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+# exploring the pH distribution
+p1 <- ggplot( aes( x = pH), data = wine) +
+  geom_histogram()
+p2 <- ggplot( aes( x = pH), data = wine) +
+  geom_histogram() +
+  scale_x_log10()
+p3 <- ggplot( aes( x = 1, y = pH), data = wine) +
+  geom_boxplot()
+grid.arrange(p1,p2,p3,ncol = 3)
+```
+
+Describes how acidic or basic a wine is on a scale from 0 (very acidic) to 14 
+(very basic); most wines are between 3-4 on the pH scale. The distribution is 
+almost normal and most of the values are in the expected range.
+
+###Alcohol
+```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+# exploring the alcohol distribution
+p1 <- ggplot( aes( x = alcohol), data = wine) +
+  geom_histogram()
+p2 <- ggplot( aes( x = alcohol), data = wine) +
+  geom_histogram() +
+  scale_x_log10()
+p3 <- ggplot( aes( x = 1, y = alcohol), data = wine) +
+  geom_boxplot()
+grid.arrange(p1,p2,p3,ncol = 3)
+```
+
+The percent alcohol content of the wine. Here we might have only one type of 
+wine with too much alcohol in it.
 
 # Univariate Analysis
 
-> **Tip**: Now that you've completed your univariate explorations, it's time to
-reflect on and summarize what you've found. Use the questions below to help you
-gather your observations and add your own if you have other thoughts!
-
 ### What is the structure of your dataset?
 
+There are 1,599 wines in the dataset with 11 features (fixed.acidity, 
+volatile.acidity, citric.acid, residual.sugar, chlorides, free.sulfur.dioxide, 
+total.sulfur.dioxide, density, pH, sulphates, alcohol ).
+
+Other observations:  
+
+  * The quality is an integer number with 6 values.
+  * Sugar content distribution is interesting and it shows that most of the 
+  wines have between 1 and 4 gram/liter but there are several other wines that 
+  have more than 4 grams which is not necessarly a bad thing.
+  * As stated in the dataset description, it seems that diffrent types of acid 
+  have significant impact on the quality.
+  * 75% of the wines have less than 11.10% alcohol 
+
 ### What is/are the main feature(s) of interest in your dataset?
+
+Based on the dataset description, it appears that the volatile acidity variable
+has the most impact on the quality
 
 ### What other features in the dataset do you think will help support your \
 investigation into your feature(s) of interest?
 
+residual sugar, alcohol and total sulfur dioxide likely contribute to the 
+quality of a wine.
+
 ### Did you create any new variables from existing variables in the dataset?
+
+Since the quality has only 6 values, we categorize this variable into the 
+following factor:  
+
+  * < 3 very bad
+  * 4   bad
+  * 5   average
+  * 6   good
+  * 7   excelent
+  * \> 8 very excelent
+  
+```{r}
+wine$quality.bucket <- cut(wine$quality, 
+                       breaks = c(0, 3, 4, 5, 6, 7, 8), 
+                       labels = c('very bad','bad','average','good','excelent',
+                                  'very excelent')) 
+```
+
 
 ### Of the features you investigated, were there any unusual distributions? \
 Did you perform any operations on the data to tidy, adjust, or change the form \
 of the data? If so, why did you do this?
 
+The suger distribution is right skewed with many outliers.
 
 # Bivariate Plots Section
 
@@ -89,9 +227,19 @@ yourself to relationships between a main output feature and one of the
 supporting variables. Try to look at relationships between supporting variables
 as well.
 
-```{r echo=FALSE, Bivariate_Plots}
-
+```{r echo=FALSE, Bivariate_Plots, fig.height=6, fig.width=10}
+ggplot(aes(x = residual.sugar, y = volatile.acidity, color = quality.bucket),
+       data = wine) + 
+  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
+                            override.aes = list(alpha = 1, size = 2))) +
+  geom_jitter(alpha = 0.5, size = 2)
 ```
+
+```{r}
+ggplot(aes(x = quality, y = volatile.acidity), data = wine) +
+  geom_jitter(alpha = 0.25, size = 2)
+```
+
 
 # Bivariate Analysis
 
