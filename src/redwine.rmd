@@ -11,7 +11,7 @@ library(reshape2)
 library(GGally)
 ```
 
-```{r echo=FALSE, Load_the_Data}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # Load the Data
 wine <- read.csv('wineQualityReds.csv')
 ```
@@ -25,7 +25,7 @@ providing a rating between 0 (very bad) and 10 (very excellent).
 Our dataset consists of threen variables with 1599 observations. here is the 
 list of all the variables.
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # exploring the variables
 str(wine)
 names(wine)
@@ -36,7 +36,7 @@ that we most care about which is quality. Let's have a look at the values we
 have in quality variable and three other variables (alcohol, residual.sugar and 
 fixed.acidity) to get a better understanding of the data.
 
-```{r, echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # exploring the values of four variables
 summary(wine)
 ```
@@ -46,7 +46,7 @@ summary(wine)
 We can see in the following diagrams that the quality distribution is fairly 
 normal and we do not have sgnificant outliers.
 
-```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the quality distribution
 p1 <- ggplot( aes( x = quality), data = wine) +
   geom_histogram()
@@ -62,7 +62,7 @@ In the following section we explore other variables that have an effect on the
 quality.
 
 ###Volatile Acidity
-```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the volatile.acidity distribution
 p1 <- ggplot( aes( x = volatile.acidity), data = wine) +
   geom_histogram()
@@ -80,7 +80,7 @@ check later to see the quality of the wine with such a high level of acetic
 acid.
 
 ###Citric Acid
-```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the citric.acid distribution
 p1 <- ggplot( aes( x = citric.acid), data = wine) +
   geom_histogram()
@@ -95,7 +95,7 @@ grid.arrange(p1,p2,p3,ncol = 3)
 Found in small quantities, citric acid can add 'freshness' and flavor to wines. 
 
 ###Residual Sugar
-```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the residual.sugar distribution
 p1 <- ggplot( aes( x = residual.sugar), data = wine) +
   geom_histogram()
@@ -114,7 +114,7 @@ grams but majarity of wines in our sample have between 1 and 4 grams of sugar
 and the distribution is right skewed.
 
 ###Total Sulfur Dioxide
-```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the total.sulfur.dioxide distribution
 p1 <- ggplot( aes( x = total.sulfur.dioxide), data = wine) +
   geom_histogram()
@@ -132,7 +132,7 @@ outliers as well which we can check later to find out the possible effect they
 have a the quality.
 
 ###PH
-```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the pH distribution
 p1 <- ggplot( aes( x = pH), data = wine) +
   geom_histogram()
@@ -149,7 +149,7 @@ Describes how acidic or basic a wine is on a scale from 0 (very acidic) to 14
 almost normal and most of the values are in the expected range.
 
 ###Alcohol
-```{r, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the alcohol distribution
 p1 <- ggplot( aes( x = alcohol), data = wine) +
   geom_histogram()
@@ -205,7 +205,7 @@ following factor:
   * 7   excelent
   * \> 8 very excelent
   
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 wine$quality.bucket <- cut(wine$quality, 
                        breaks = c(0, 3, 4, 5, 6, 7, 8), 
                        labels = c('very bad','bad','average','good','excelent',
@@ -221,25 +221,66 @@ The suger distribution is right skewed with many outliers.
 
 # Bivariate Plots Section
 
-> **Tip**: Based on what you saw in the univariate plots, what relationships
-between variables might be interesting to look at in this section? Don't limit
-yourself to relationships between a main output feature and one of the
-supporting variables. Try to look at relationships between supporting variables
-as well.
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=11, fig.width=9}
+ggpairs(data = wine, columns=2:13)
+```
 
-```{r echo=FALSE, Bivariate_Plots, fig.height=6, fig.width=10}
-ggplot(aes(x = residual.sugar, y = volatile.acidity, color = quality.bucket),
+Different types of acids in the wine tend to correlate with each other. Also, 
+quality seems to have a semi strong correlation with alcohol.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
        data = wine) + 
   scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
                             override.aes = list(alpha = 1, size = 2))) +
   geom_jitter(alpha = 0.5, size = 2)
 ```
 
-```{r}
-ggplot(aes(x = quality, y = volatile.acidity), data = wine) +
-  geom_jitter(alpha = 0.25, size = 2)
+about volatile.acidity and alcohol relation, most important factors
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = volatile.acidity, y = residual.sugar, color = quality.bucket),
+       data = wine) + 
+  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
+                            override.aes = list(alpha = 1, size = 2))) +
+  geom_jitter(alpha = 0.5, size = 2)
 ```
 
+about volatile.acidity and sugar, sugar does not have a role
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = alcohol, y = residual.sugar, color = quality.bucket),
+       data = wine) + 
+  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
+                            override.aes = list(alpha = 1, size = 2))) +
+  geom_jitter(alpha = 0.5, size = 2)
+```
+
+about alcohol and sugar, sugar does not have a role
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
+       data = wine) +
+  geom_boxplot()
+```
+
+less acid better
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+ggplot(aes(x = quality, y = alcohol, color = quality.bucket), 
+       data = wine) +
+  geom_boxplot()
+```
+
+more alcohol better
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+ggplot(aes(x = quality, y = residual.sugar, color = quality.bucket), 
+       data = wine) +
+  geom_boxplot()
+```
+
+sugar does not have an impact
 
 # Bivariate Analysis
 
