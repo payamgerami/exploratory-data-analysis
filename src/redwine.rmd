@@ -229,7 +229,7 @@ ggpairs(data = wine, columns=2:13)
 Different types of acids in the wine tend to correlate with each other. Also, 
 quality seems to have a semi strong correlation with alcohol.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=9}
 p1 <- ggplot(aes(x = quality.bucket, y = volatile.acidity), data = wine) + 
   geom_jitter(alpha = 0.5, size = 2)
 p2 <- ggplot(aes(x = quality.bucket, y = volatile.acidity), data = wine) +
@@ -240,7 +240,7 @@ grid.arrange(p1,p2,ncol = 2)
 The general trend between the volatile.acidity and the quality provides an 
 evidence that as volatile acidity decreases, the quality increases.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=9}
 p1 <- ggplot(aes(x = quality.bucket, y = alcohol), data = wine) + 
   geom_jitter(alpha = 0.5, size = 2)
 p2 <- ggplot(aes(x = quality.bucket, y = alcohol), data = wine) +
@@ -251,7 +251,7 @@ grid.arrange(p1,p2,ncol = 2)
 And the general trend between the alcohol and the quality provides an evidence 
 that as alcohol increases, the quality increases as well.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=9}
 p1 <- ggplot(aes(x = quality.bucket, y = residual.sugar), data = wine) + 
   geom_jitter(alpha = 0.5, size = 2)
 p2 <- ggplot(aes(x = quality.bucket, y = residual.sugar), data = wine) +
@@ -262,7 +262,7 @@ grid.arrange(p1,p2,ncol = 2)
 And the general trend between residual.sugar and the quality confirms that 
 residual sugar has a minimal impact on the quality of the wine.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=7}
 ggplot(aes(x = fixed.acidity, y = pH), data = wine) +
   geom_jitter(alpha = 0.5, size = 2)
 ```
@@ -288,7 +288,7 @@ clearly shows as the quality goes up, the volatile acidity level decreases.
 
 # Multivariate Plots Section
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=7}
 ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
        data = wine) + 
   scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
@@ -300,7 +300,7 @@ Volatile.acidity and Alcohol seems to be the most important factors affecting
 the quality of the wine. It looks like wines with less amount of volatile 
 acidity and more amount of alcohol have better quality.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=7}
 ggplot(aes(x = sulphates, y = citric.acid, color = quality.bucket),
        data = wine) + 
   scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
@@ -313,7 +313,7 @@ and volatile acidity are sulphates and citric acid. As we can see, when the
 combination of citric acid and sulphates increases, we tend to have a better 
 quality wine.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=7}
 ggplot(aes(x = fixed.acidity, y = pH, color = quality.bucket),
        data = wine) + 
   scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
@@ -328,42 +328,52 @@ to be any pattern between the combination of the two and the quality.
 
 ### Relationships observed in investigation
 
+The main features of interest are acidity and alcohol.
+
 ### Interesting or surprising interactions between features?
+
+between other variables and quality, it seems that no clear correlation is 
+available.
 
 ------
 
 # Final Plots and Summary
 
-> **Tip**: You've done a lot of exploration and have built up an understanding
-of the structure of and relationships between the variables in your dataset.
-Here, you will select three plots from all of your previous exploration to
-present here as a summary of some of your most interesting findings. Make sure
-that you have refined your selected plots for good titling, axis labels (with
-units), and good aesthetic choices (e.g. color, transparency). After each plot,
-make sure you justify why you chose each plot by describing what it shows.
-
 ### Plot One
-```{r echo=FALSE, Plot_One}
 
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
+       data = wine) + 
+  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
+                            override.aes = list(alpha = 1, size = 2))) +
+  geom_jitter(alpha = 0.5, size = 2)
 ```
 
 ### Description One
 
 
-### Plot Two
-```{r echo=FALSE, Plot_Two}
 
+### Plot Two
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
+       data = wine) +
+  geom_boxplot()
 ```
 
 ### Description Two
 
 
-### Plot Three
-```{r echo=FALSE, Plot_Three}
 
+### Plot Three
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
+       data = wine) +
+  geom_boxplot()
 ```
 
 ### Description Three
+
+
 
 ------
 
@@ -373,6 +383,3 @@ make sure you justify why you chose each plot by describing what it shows.
 the insights you found. What were some of the struggles that you went through?
 What went well? What was surprising? Make sure you include an insight into
 future work that could be done with the dataset.
-
-> **Tip**: Don't forget to remove this, and the other **Tip** sections before
-saving your final work and knitting the final report!
