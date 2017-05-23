@@ -53,7 +53,7 @@ p1 <- ggplot( aes( x = quality), data = wine) +
 p2 <- ggplot( aes( x = quality), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = 1, y = quality), data = wine) +
+p3 <- ggplot( aes( x = quality, y = quality), data = wine) +
   geom_boxplot()
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
@@ -69,7 +69,7 @@ p1 <- ggplot( aes( x = volatile.acidity), data = wine) +
 p2 <- ggplot( aes( x = volatile.acidity), data = wine) +
   geom_histogram() +
   xlim(0.15,0.95)
-p3 <- ggplot( aes( x = 1, y = volatile.acidity), data = wine) +
+p3 <- ggplot( aes( x = volatile.acidity, y = volatile.acidity), data = wine) +
   geom_boxplot()
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
@@ -87,7 +87,7 @@ p1 <- ggplot( aes( x = citric.acid), data = wine) +
 p2 <- ggplot( aes( x = citric.acid), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = 1, y = citric.acid), data = wine) +
+p3 <- ggplot( aes( x = citric.acid, y = citric.acid), data = wine) +
   geom_boxplot()
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
@@ -102,7 +102,7 @@ p1 <- ggplot( aes( x = residual.sugar), data = wine) +
 p2 <- ggplot( aes( x = residual.sugar), data = wine) +
   geom_histogram() +
   xlim(1,4)
-p3 <- ggplot( aes( x = 1, y = residual.sugar), data = wine) +
+p3 <- ggplot( aes( x = residual.sugar, y = residual.sugar), data = wine) +
   geom_boxplot()
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
@@ -120,7 +120,8 @@ p1 <- ggplot( aes( x = total.sulfur.dioxide), data = wine) +
   geom_histogram()
 p2 <- ggplot( aes( x = total.sulfur.dioxide), data = wine) +
   geom_histogram(binwidth=50)
-p3 <- ggplot( aes( x = 1, y = total.sulfur.dioxide), data = wine) +
+p3 <- ggplot( aes( x = total.sulfur.dioxide, y = total.sulfur.dioxide), 
+              data = wine) +
   geom_boxplot()
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
@@ -139,7 +140,7 @@ p1 <- ggplot( aes( x = pH), data = wine) +
 p2 <- ggplot( aes( x = pH), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = 1, y = pH), data = wine) +
+p3 <- ggplot( aes( x = pH, y = pH), data = wine) +
   geom_boxplot()
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
@@ -156,7 +157,7 @@ p1 <- ggplot( aes( x = alcohol), data = wine) +
 p2 <- ggplot( aes( x = alcohol), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = 1, y = alcohol), data = wine) +
+p3 <- ggplot( aes( x = alcohol, y = alcohol), data = wine) +
   geom_boxplot()
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
@@ -228,79 +229,46 @@ ggpairs(data = wine, columns=2:13)
 Different types of acids in the wine tend to correlate with each other. Also, 
 quality seems to have a semi strong correlation with alcohol.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
-ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
-       data = wine) + 
-  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
-                            override.aes = list(alpha = 1, size = 2))) +
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+p1 <- ggplot(aes(x = quality.bucket, y = volatile.acidity), data = wine) + 
   geom_jitter(alpha = 0.5, size = 2)
-```
-
-Volatile.acidity and Alcohol seems to be the most important factors affecting 
-the quality of the wine. It looks like wines with less amount of volatile 
-acidity and more amount of alcohol have better quality.
-
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
-ggplot(aes(x = volatile.acidity, y = residual.sugar, color = quality.bucket),
-       data = wine) + 
-  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
-                            override.aes = list(alpha = 1, size = 2))) +
-  geom_jitter(alpha = 0.5, size = 2)
-```
-
-The correlation between volatile.acidity and residual.sugar shows that sugar 
-does not have a significant impact on the quality.
-
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
-ggplot(aes(x = alcohol, y = residual.sugar, color = quality.bucket),
-       data = wine) + 
-  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
-                            override.aes = list(alpha = 1, size = 2))) +
-  geom_jitter(alpha = 0.5, size = 2)
-```
-
-The correlation between alcohol and residual.sugar shows that sugar does not 
-have a significant impact on the quality.
-
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
-ggplot(aes(x = sulphates, y = citric.acid, color = quality.bucket),
-       data = wine) + 
-  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
-                            override.aes = list(alpha = 1, size = 2))) +
-  geom_jitter(alpha = 0.5, size = 2)
-```
-
-Two other features that have impact on the quality but not as much as alcohol 
-and volatile acidity are sulphates and citric acid. As we can see, when the 
-combination of citric acid and sulphates increases, we tend to have a better 
-quality wine.
-
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
-ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
-       data = wine) +
+p2 <- ggplot(aes(x = quality.bucket, y = volatile.acidity), data = wine) +
   geom_boxplot()
+grid.arrange(p1,p2,ncol = 2)
 ```
 
-The general trend between the volatile.acidity and the quality provides another 
+The general trend between the volatile.acidity and the quality provides an 
 evidence that as volatile acidity decreases, the quality increases.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
-ggplot(aes(x = quality, y = alcohol, color = quality.bucket), 
-       data = wine) +
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+p1 <- ggplot(aes(x = quality.bucket, y = alcohol), data = wine) + 
+  geom_jitter(alpha = 0.5, size = 2)
+p2 <- ggplot(aes(x = quality.bucket, y = alcohol), data = wine) +
   geom_boxplot()
+grid.arrange(p1,p2,ncol = 2)
 ```
 
-And the general trend between the alcohol and the quality provides another 
-evidence that as alcohol increases, the quality increases as well.
+And the general trend between the alcohol and the quality provides an evidence 
+that as alcohol increases, the quality increases as well.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
-ggplot(aes(x = quality, y = residual.sugar, color = quality.bucket), 
-       data = wine) +
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+p1 <- ggplot(aes(x = quality.bucket, y = residual.sugar), data = wine) + 
+  geom_jitter(alpha = 0.5, size = 2)
+p2 <- ggplot(aes(x = quality.bucket, y = residual.sugar), data = wine) +
   geom_boxplot()
+grid.arrange(p1,p2,ncol = 2)
 ```
 
 And the general trend between residual.sugar and the quality confirms that 
 residual sugar has a minimal impact on the quality of the wine.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = fixed.acidity, y = pH), data = wine) +
+  geom_jitter(alpha = 0.5, size = 2)
+```
+
+The strongest correlation is between fixed.acidity and pH. As it's clear in the 
+diagram, fixed.acidity decreases when pH decreases.
 
 # Bivariate Analysis
 
@@ -320,27 +288,47 @@ clearly shows as the quality goes up, the volatile acidity level decreases.
 
 # Multivariate Plots Section
 
-> **Tip**: Now it's time to put everything together. Based on what you found in
-the bivariate plots section, create a few multivariate plots to investigate
-more complex interactions between variables. Make sure that the plots that you
-create here are justified by the plots you explored in the previous section. If
-you plan on creating any mathematical models, this is the section where you
-will do that.
-
-```{r echo=FALSE, Multivariate_Plots}
-
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
+       data = wine) + 
+  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
+                            override.aes = list(alpha = 1, size = 2))) +
+  geom_jitter(alpha = 0.5, size = 2)
 ```
+
+Volatile.acidity and Alcohol seems to be the most important factors affecting 
+the quality of the wine. It looks like wines with less amount of volatile 
+acidity and more amount of alcohol have better quality.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = sulphates, y = citric.acid, color = quality.bucket),
+       data = wine) + 
+  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
+                            override.aes = list(alpha = 1, size = 2))) +
+  geom_jitter(alpha = 0.5, size = 2)
+```
+
+Two other features that have impact on the quality but not as much as alcohol 
+and volatile acidity are sulphates and citric acid. As we can see, when the 
+combination of citric acid and sulphates increases, we tend to have a better 
+quality wine.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = fixed.acidity, y = pH, color = quality.bucket),
+       data = wine) + 
+  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
+                            override.aes = list(alpha = 1, size = 2))) +
+  geom_jitter(alpha = 0.5, size = 2)
+```
+
+Even though pH and fixed.acidity are strongly correlated, there does not seem 
+to be any pattern between the combination of the two and the quality.
 
 # Multivariate Analysis
 
-### Talk about some of the relationships you observed in this part of the \
-investigation. Were there features that strengthened each other in terms of \
-looking at your feature(s) of interest?
+### Relationships observed in investigation
 
-### Were there any interesting or surprising interactions between features?
-
-### OPTIONAL: Did you create any models with your dataset? Discuss the \
-strengths and limitations of your model.
+### Interesting or surprising interactions between features?
 
 ------
 
