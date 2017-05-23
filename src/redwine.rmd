@@ -262,7 +262,7 @@ grid.arrange(p1,p2,ncol = 2)
 And the general trend between residual.sugar and the quality confirms that 
 residual sugar has a minimal impact on the quality of the wine.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=7}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=6}
 ggplot(aes(x = fixed.acidity, y = pH), data = wine) +
   geom_jitter(alpha = 0.5, size = 2)
 ```
@@ -346,7 +346,9 @@ ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
        data = wine) + 
   scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
                             override.aes = list(alpha = 1, size = 2))) +
-  geom_jitter(alpha = 0.5, size = 2)
+  geom_jitter(alpha = 0.5, size = 2) +
+  labs(title = "Volatile Acidity vs. Alcohol by Quality Categories") + 
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ### Description One
@@ -357,7 +359,9 @@ ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
 ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
        data = wine) +
-  geom_boxplot()
+  geom_boxplot() +
+  labs(title = "Volatile Acidity by Quality Categories") + 
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ### Description Two
@@ -366,9 +370,11 @@ ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket),
 
 ### Plot Three
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
-ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
+ggplot(aes(x = quality, y = alcohol, color = quality.bucket), 
        data = wine) +
-  geom_boxplot()
+  geom_boxplot() +
+  labs(title = "Alcohol by Quality Categories") + 
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ### Description Three
