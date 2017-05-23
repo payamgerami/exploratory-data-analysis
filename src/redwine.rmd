@@ -262,6 +262,19 @@ ggplot(aes(x = alcohol, y = residual.sugar, color = quality.bucket),
 The correlation between alcohol and residual.sugar shows that sugar does not 
 have a significant impact on the quality.
 
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
+ggplot(aes(x = sulphates, y = citric.acid, color = quality.bucket),
+       data = wine) + 
+  scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
+                            override.aes = list(alpha = 1, size = 2))) +
+  geom_jitter(alpha = 0.5, size = 2)
+```
+
+Two other features that have impact on the quality but not as much as alcohol 
+and volatile acidity are sulphates and citric acid. As we can see, when the 
+combination of citric acid and sulphates increases, we tend to have a better 
+quality wine.
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
        data = wine) +
@@ -291,18 +304,19 @@ residual sugar has a minimal impact on the quality of the wine.
 
 # Bivariate Analysis
 
-> **Tip**: As before, summarize what you found in your bivariate explorations
-here. Use the questions below to guide your discussion.
+### Some of the Observed Relationships
 
-### Talk about some of the relationships you observed in this part of the \
-investigation. How did the feature(s) of interest vary with other features in \
-the dataset?
+We can infer that higher quality wines tend to have high alcohol percentage and 
+low volatile acidity.
 
-### Did you observe any interesting relationships between the other features \
-(not the main feature(s) of interest)?
+### Interesting relationships between the other features
+
+It appears that sugar does not have a clear impact on quality. 
 
 ### What was the strongest relationship you found?
 
+The relationship between volatile acidity and quality is very strong. The plot 
+clearly shows as the quality goes up, the volatile acidity level decreases.
 
 # Multivariate Plots Section
 
