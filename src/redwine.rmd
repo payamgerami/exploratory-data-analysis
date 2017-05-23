@@ -236,7 +236,9 @@ ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
   geom_jitter(alpha = 0.5, size = 2)
 ```
 
-about volatile.acidity and alcohol relation, most important factors
+Volatile.acidity and Alcohol seems to be the most important factors affecting 
+the quality of the wine. It looks like wines with less amount of volatile 
+acidity and more amount of alcohol have better quality.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
 ggplot(aes(x = volatile.acidity, y = residual.sugar, color = quality.bucket),
@@ -246,7 +248,8 @@ ggplot(aes(x = volatile.acidity, y = residual.sugar, color = quality.bucket),
   geom_jitter(alpha = 0.5, size = 2)
 ```
 
-about volatile.acidity and sugar, sugar does not have a role
+The correlation between volatile.acidity and residual.sugar shows that sugar 
+does not have a significant impact on the quality.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=9}
 ggplot(aes(x = alcohol, y = residual.sugar, color = quality.bucket),
@@ -256,7 +259,8 @@ ggplot(aes(x = alcohol, y = residual.sugar, color = quality.bucket),
   geom_jitter(alpha = 0.5, size = 2)
 ```
 
-about alcohol and sugar, sugar does not have a role
+The correlation between alcohol and residual.sugar shows that sugar does not 
+have a significant impact on the quality.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
@@ -264,7 +268,8 @@ ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket),
   geom_boxplot()
 ```
 
-less acid better
+The general trend between the volatile.acidity and the quality provides another 
+evidence that as volatile acidity decreases, the quality increases.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 ggplot(aes(x = quality, y = alcohol, color = quality.bucket), 
@@ -272,7 +277,8 @@ ggplot(aes(x = quality, y = alcohol, color = quality.bucket),
   geom_boxplot()
 ```
 
-more alcohol better
+And the general trend between the alcohol and the quality provides another 
+evidence that as alcohol increases, the quality increases as well.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 ggplot(aes(x = quality, y = residual.sugar, color = quality.bucket), 
@@ -280,7 +286,8 @@ ggplot(aes(x = quality, y = residual.sugar, color = quality.bucket),
   geom_boxplot()
 ```
 
-sugar does not have an impact
+And the general trend between residual.sugar and the quality confirms that 
+residual sugar has a minimal impact on the quality of the wine.
 
 # Bivariate Analysis
 
