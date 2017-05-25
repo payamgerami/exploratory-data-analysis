@@ -372,7 +372,9 @@ ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket),
 
 ### Description Two
 
-
+Volatile acidity has the strongest correlation with quality. The above boxplot 
+clearly shows the increasing trend in the volatile acidity when wine quality 
+moves from lower level to higher level.
 
 ### Plot Three
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
@@ -387,13 +389,19 @@ ggplot(aes(x = quality, y = alcohol, color = quality.bucket),
 
 ### Description Three
 
-
+Alcohol percentage has the second most strongest correlation with the quality of
+the wine. It is clear in the above boxplot that high quality wines tend to have 
+higher alcohol percentage.
 
 ------
 
 # Reflection
 
-> **Tip**: Here's the final step! Reflect on the exploration you performed and
-the insights you found. What were some of the struggles that you went through?
-What went well? What was surprising? Make sure you include an insight into
-future work that could be done with the dataset.
+In this analysis I explored the effect of different features of red wine on it's
+quality based on the data set that contained 1,599 red wines with 11 variables 
+on the chemical properties. I categorized the quality feature into 6 categories 
+and by exploring the correlation between the features I realized that the most 
+effective features are volatile acidity and alcohol percentage. By looking at 
+combination of other features it's really hard to find a repeatable pattern and 
+as a result I was not able to find the perfect balance between the features that
+would result in perfect quality wine.
