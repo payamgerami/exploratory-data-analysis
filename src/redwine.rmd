@@ -347,19 +347,25 @@ ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
   scale_color_brewer(type = 'div', guide = guide_legend(title = 'color', 
                             override.aes = list(alpha = 1, size = 2))) +
   geom_jitter(alpha = 0.5, size = 2) +
+  xlab('volatile acidity (acetic acid - g / dm^3)') +
+  ylab('alcohol (% by volume)') +
   labs(title = "Volatile Acidity vs. Alcohol by Quality Categories") + 
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ### Description One
 
-
+This diagram illustrates the correlation between the two most effective features
+on the quality. Wine seems to have better quality when volatile acidity is 
+between 0.3 and 0.4 g / dm^3, and alcohol is between 11 and 14 percent.
 
 ### Plot Two
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
 ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket), 
        data = wine) +
   geom_boxplot() +
+  xlab('Wine Quality') +
+  ylab('volatile acidity (acetic acid - g / dm^3)') +
   labs(title = "Volatile Acidity by Quality Categories") + 
   theme(plot.title = element_text(hjust = 0.5))
 ```
@@ -373,6 +379,8 @@ ggplot(aes(x = quality, y = volatile.acidity, color = quality.bucket),
 ggplot(aes(x = quality, y = alcohol, color = quality.bucket), 
        data = wine) +
   geom_boxplot() +
+  xlab('Wine Quality') +
+  ylab('alcohol (% by volume)') +
   labs(title = "Alcohol by Quality Categories") + 
   theme(plot.title = element_text(hjust = 0.5))
 ```
