@@ -9,6 +9,7 @@ library(dplyr)
 library(RColorBrewer)
 library(reshape2)
 library(GGally)
+library(corrplot)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -41,20 +42,24 @@ fixed.acidity) to get a better understanding of the data.
 summary(wine)
 ```
 
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=9}
+create_histogram <- function(variable, binwidth = 0.5) {
+  return(ggplot(aes_string(x = variable), data = wine) + 
+           geom_histogram(binwidth = binwidth))}
+create_boxplot <- function(variable) {
+  return(ggplot(aes_string(x = variable, y = variable), data = wine) + 
+           geom_boxplot())}
+```
+
 ###Quality
 
 We can see in the following diagrams that the quality distribution is fairly normal and we do not have sgnificant outliers.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=9}
 # exploring the quality distribution
-p1 <- ggplot( aes( x = quality), data = wine) +
-  geom_histogram()
-p2 <- ggplot( aes( x = quality), data = wine) +
-  geom_histogram() +
-  scale_x_log10()
-p3 <- ggplot( aes( x = quality, y = quality), data = wine) +
-  geom_boxplot()
-grid.arrange(p1,p2,p3,ncol = 3)
+p1 <- create_histogram('quality')
+p2 <- create_boxplot('quality')
+grid.arrange(p1,p2,ncol = 2)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -67,13 +72,11 @@ quality.
 ### Fixed Acidity
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the fixed.acidity distribution
-p1 <- ggplot( aes( x = fixed.acidity), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('fixed.acidity')
 p2 <- ggplot( aes( x = fixed.acidity), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = fixed.acidity, y = fixed.acidity), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('fixed.acidity')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -87,13 +90,11 @@ Most acids involved with wine or fixed or nonvolatile - do not evaporate readily
 ### Volatile Acidity
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the volatile.acidity distribution
-p1 <- ggplot( aes( x = volatile.acidity), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('volatile.acidity', 0.01)
 p2 <- ggplot( aes( x = volatile.acidity), data = wine) +
   geom_histogram() +
   xlim(0.15,0.95)
-p3 <- ggplot( aes( x = volatile.acidity, y = volatile.acidity), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('volatile.acidity')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -109,13 +110,11 @@ acid (acetic acid - g / dm^3).
 ### Citric Acid
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the citric.acid distribution
-p1 <- ggplot( aes( x = citric.acid), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('citric.acid', 0.02)
 p2 <- ggplot( aes( x = citric.acid), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = citric.acid, y = citric.acid), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('citric.acid')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -129,13 +128,11 @@ Found in small quantities, citric acid can add 'freshness' and flavor to wines
 ### Residual Sugar
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the residual.sugar distribution
-p1 <- ggplot( aes( x = residual.sugar), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('residual.sugar')
 p2 <- ggplot( aes( x = residual.sugar), data = wine) +
   geom_histogram() +
   xlim(1,4)
-p3 <- ggplot( aes( x = residual.sugar, y = residual.sugar), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('residual.sugar')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -152,13 +149,11 @@ and the distribution is right skewed (g / dm^3).
 ### Chlorides
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the chlorides distribution
-p1 <- ggplot( aes( x = chlorides), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('chlorides',0.01)
 p2 <- ggplot( aes( x = chlorides), data = wine) +
   geom_histogram() +
   xlim(0.05,0.2)
-p3 <- ggplot( aes( x = chlorides, y = chlorides), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('chlorides')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -171,13 +166,11 @@ The amount of salt in the wine (sodium chloride - g / dm^3).
 ### Free Sulfur Dioxide
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the free.sulfur.dioxide distribution
-p1 <- ggplot( aes( x = free.sulfur.dioxide), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('free.sulfur.dioxide', 1)
 p2 <- ggplot( aes( x = free.sulfur.dioxide), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = free.sulfur.dioxide, y = free.sulfur.dioxide), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('free.sulfur.dioxide')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -192,13 +185,11 @@ gas) and bisulfite ion; it prevents microbial growth and the oxidation of wine
 ### Total Sulfur Dioxide
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the total.sulfur.dioxide distribution
-p1 <- ggplot( aes( x = total.sulfur.dioxide), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('total.sulfur.dioxide', 2)
 p2 <- ggplot( aes( x = total.sulfur.dioxide), data = wine) +
-  geom_histogram(binwidth=50)
-p3 <- ggplot( aes( x = total.sulfur.dioxide, y = total.sulfur.dioxide), 
-              data = wine) +
-  geom_boxplot()
+  geom_histogram() +
+  scale_x_log10()
+p3 <- create_boxplot('total.sulfur.dioxide')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -215,13 +206,11 @@ have a the quality (mg / dm^3).
 ### Density
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the density distribution
-p1 <- ggplot( aes( x = density), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('density', 0.001)
 p2 <- ggplot( aes( x = density), data = wine) +
   geom_histogram() +
   xlim(0.9956, 0.9978)
-p3 <- ggplot( aes( x = density, y = density), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('density')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -235,13 +224,11 @@ and sugar content (g / cm^3).
 ###PH
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the pH distribution
-p1 <- ggplot( aes( x = pH), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('pH', 0.02)
 p2 <- ggplot( aes( x = pH), data = wine) +
-  geom_histogram() +
+  geom_histogram(binwidth = 0.005) +
   xlim(3.210,3.400)
-p3 <- ggplot( aes( x = pH, y = pH), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('pH')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -256,13 +243,11 @@ almost normal and most of the values are in the expected range.
 ### Sulphates 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the sulphates distribution
-p1 <- ggplot( aes( x = sulphates), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('sulphates', 0.01)
 p2 <- ggplot( aes( x = sulphates), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = sulphates, y = sulphates), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('sulphates')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -276,13 +261,11 @@ acts as an antimicrobial and antioxidant (potassium sulphate - g / dm3).
 ### Alcohol
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=9}
 # exploring the alcohol distribution
-p1 <- ggplot( aes( x = alcohol), data = wine) +
-  geom_histogram()
+p1 <- create_histogram('alcohol', 0.1)
 p2 <- ggplot( aes( x = alcohol), data = wine) +
   geom_histogram() +
   scale_x_log10()
-p3 <- ggplot( aes( x = alcohol, y = alcohol), data = wine) +
-  geom_boxplot()
+p3 <- create_boxplot('alcohol')
 grid.arrange(p1,p2,p3,ncol = 3)
 ```
 
@@ -350,8 +333,9 @@ The suger distribution is right skewed with many outliers.
 
 # Bivariate Plots Section
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=11, fig.width=9}
-ggpairs(data = wine, columns=2:13)
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=8, fig.width=9}
+M <- cor(wine[, 2:13])
+corrplot(M, method="number")
 ```
 
 Different types of acids in the wine tend to correlate with each other. Also, 
@@ -507,7 +491,7 @@ between 0.3 and 0.4 g / dm^3, and alcohol is between 11 and 14 percent.
 
 ### Plot Two
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
-ggplot(aes(x = quality.bucket, y = volatile.acidity, color = quality.bucket), 
+ggplot(aes(x = quality.bucket, y = volatile.acidity), 
        data = wine) +
   geom_jitter(alpha = 0.5, size = 2)  +
   geom_boxplot( alpha = .5,color = 'blue') +
@@ -530,7 +514,7 @@ moves from lower level to higher level.
 
 ### Plot Three
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=9}
-ggplot(aes(x = quality.bucket, y = alcohol, color = quality.bucket), 
+ggplot(aes(x = quality.bucket, y = alcohol), 
        data = wine) +
   geom_jitter(alpha = 0.5, size = 2)  +
   geom_boxplot( alpha = .5,color = 'blue') +
