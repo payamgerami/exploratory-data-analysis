@@ -417,7 +417,7 @@ ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
                             override.aes = list(alpha = 1, size = 2))) +
   geom_jitter(alpha = 0.5, size = 2) +
   geom_smooth(method = "lm", se = FALSE,size=1)  +
-  scale_color_brewer(type='seq', guide=guide_legend(title='Quality'))
+  scale_color_brewer(type='div', guide=guide_legend(title='Quality'))
 ```
 
 Volatile.acidity and Alcohol seems to be the most important factors affecting 
@@ -431,7 +431,7 @@ ggplot(aes(x = sulphates, y = citric.acid, color = quality.bucket),
                             override.aes = list(alpha = 1, size = 2))) +
   geom_jitter(alpha = 0.5, size = 2)+
   geom_smooth(method = "lm", se = FALSE,size=1)  +
-  scale_color_brewer(type='seq', guide=guide_legend(title='Quality'))
+  scale_color_brewer(type='div', guide=guide_legend(title='Quality'))
 ```
 
 Two other features that have impact on the quality but not as much as alcohol 
@@ -446,7 +446,7 @@ ggplot(aes(x = fixed.acidity, y = pH, color = quality.bucket),
                             override.aes = list(alpha = 1, size = 2))) +
   geom_jitter(alpha = 0.5, size = 2)+
   geom_smooth(method = "lm", se = FALSE,size=1)  +
-  scale_color_brewer(type='seq', guide=guide_legend(title='Quality'))
+  scale_color_brewer(type='div', guide=guide_legend(title='Quality'))
 ```
 
 Even though pH and fixed.acidity are strongly correlated, there does not seem 
@@ -476,7 +476,7 @@ ggplot(aes(x = volatile.acidity, y = alcohol, color = quality.bucket),
                             override.aes = list(alpha = 1, size = 2))) +
   geom_jitter(alpha = 0.5, size = 2) +
   geom_smooth(method = "lm", se = FALSE,size=1)  +
-  scale_color_brewer(type='seq', guide=guide_legend(title='Quality')) +
+  scale_color_brewer(type='div', guide=guide_legend(title='Quality')) +
   xlab('volatile acidity (acetic acid - g / dm^3)') +
   ylab('alcohol (% by volume)') +
   labs(title = "Volatile Acidity vs. Alcohol by Quality Categories") + 
